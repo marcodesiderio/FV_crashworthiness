@@ -31,7 +31,7 @@ fig, ax = plt.subplots()
 ax.set_xlabel(r'$\epsilon$ [-]')
 ax.set_ylabel(r'$\sigma_x$ [MPa]')
 ax.minorticks_on()
-ax.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
+ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
 
 
@@ -64,7 +64,7 @@ for dir in os.listdir(rootdir):
             force = force_df.to_numpy()[:,1]
             sigma_x = force / A
             #process strain data
-            strain_df = pd.read_csv(df_dir_strain, delimiter=',', header=1)
+            strain_df = pd.read_csv(df_dir_strain, delimiter = ',', header = 1)
             ex = np.mean(strain_df.to_numpy()[:, 1:-1:2], axis = 1)
             # remove after failure data
             sigma_x = np.insert(sigma_x[ex > 0], 0, 0)
