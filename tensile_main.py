@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
 import pandas as pd
+import latextable
+from texttable import Texttable
+
 sns.set()
 
 #directory stuff
@@ -11,11 +14,14 @@ xforce_name = 'xforce'
 xstrain_name = 'xstrain'
 data_extension = '.csv'
 
-#specimen dimensions
+#specimen dimensions and properties
 # rectangular cross section
 w = 1.75 #width, mm
 t = 1.6 #thickness, mm
 A = w * t #mm2
+E = 7.17e4 #MPa
+e02s = np.linspace(0, 800, 801) / E + 0.002
+
 
 # initialize plotting
 
@@ -33,8 +39,11 @@ ax.set_ylabel(r'$\sigma_x$ [MPa]')
 ax.minorticks_on()
 ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
+sig_ys = np.empty(0)
+e_dots = np.empty(0)
 
-
+ID = 0
+test_IDs = []
 for dir in os.listdir(rootdir):
     subdir = os.path.join(rootdir, dir)
     if os.path.isdir(subdir):
@@ -44,14 +53,14 @@ for dir in os.listdir(rootdir):
         for file in files:
             if xforce_name in file and data_extension in file:
                 df_dir_force = os.path.join(subdir, file)
-                print(df_dir_force)
+                # print(df_dir_force)
                 # assert count_xforce == 0, f'multiple xforce files found, check {subdir}'
                 count_xforce += 1
                 if count_xforce > 1:
                     raise ValueError(f'multiple xforce files found, check {subdir}')
             if xstrain_name in file and data_extension in file:
                 df_dir_strain = os.path.join(subdir, file)
-                print(df_dir_strain)
+                # print(df_dir_strain)
                 # assert count_xstrain == 0, f'multiple xstrain files found, check {subdir}'
                 count_xstrain += 1
                 if count_xstrain > 1:
@@ -73,10 +82,23 @@ for dir in os.listdir(rootdir):
                 sigma_x = - sigma_x
             time = np.insert(time[ex > 0], 0, 0)
             ex = np.insert(ex[ex > 0], 0, 0)
-            e_dot = round(ex[-1] / time[-1], 4)
+            ex_argmax = np.argmax(ex)
+            ex01_arg = np.argmax(ex>0.01)
+            e_dot = round(ex[ex01_arg] / time[ex01_arg], 4)
             #plot stress-strain
-            ax.plot(ex[:-1], sigma_x[:-1], label = r'$\dot{\epsilon}$ = ' + str(e_dot) + r'$s^{-1}$')
+            ax.plot(ex[:ex_argmax], sigma_x[:ex_argmax], label = r'$\dot{\epsilon}$ = ' + str(e_dot) + r'$s^{-1}$')
+            ey = ex - sigma_x / E - 0.002 ## 0.2proof yield strain
+            argyield = np.argmax(ey > 0)
+            sigma_y = sigma_x[argyield]
+            # print('Folder: ', dir)
+            # print('Sigma_y0.2 = %1.4f' % sigma_y, '@ e_dot = %1.4f' % e_dot)
+            sig_ys = np.append(sig_ys, sigma_y)
+            e_dots = np.append(e_dots, e_dot)
+            ID += 1
+            test_ID = 'Tensile' + str(ID)
 
+# rows = [['Test ID', r'$\dot{\epsilon}$ [\SI{mm/mm}]', '$\sigma_x$ [MPa]'],
+#         []]
 
 ax.legend()
 plt.show()
