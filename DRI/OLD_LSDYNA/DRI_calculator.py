@@ -10,7 +10,7 @@ sns.set()
 xi = 0.224
 wn = 52.9
 
-F0 = 1.0
+
 df = pd.read_csv('z_acc_totfloor.csv', delimiter = ',', header = 1, index_col=None, encoding = 'ISO-8859-1')
 # df = df.reset_index()
 df.dropna(axis=1, inplace = True)
