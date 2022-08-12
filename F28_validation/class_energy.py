@@ -7,3 +7,4 @@ class crash_energy:
     def __init__(self, data):
         self.E_init = data[0]
         self.E_final = data[-1]
+
