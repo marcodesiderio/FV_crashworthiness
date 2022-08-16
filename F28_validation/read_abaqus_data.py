@@ -12,7 +12,7 @@ class data:
     __slots__ = ['rootdir', 'filename', 'df', 'data', 'data_filtered', 'data_label', 'data_type', 'add_label', 'labels',
                  'time', 'filter_data', 'fc', 'data_key', 'fs']
 
-    def __init__(self, rootdir, filename, extension, add_label = '', filter_data = 'False', fc = 60, fs = 1000):
+    def __init__(self, rootdir, filename, extension, add_label = '', filter_data = False, fc = 60, fs = 1000):
         self.fc = fc
         self.fs = fs
         self.labels = filename.split('_')

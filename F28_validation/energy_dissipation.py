@@ -13,15 +13,24 @@ sns.set()
 import abaqus_keyword_parser as parse
 
 
+case = '4frames'
 
-rootdir = r'C:\Users\Marco\OneDrive\Documents\TU Delft\MSc\THESIS\Research Work\data_analysis\FV_crashworthiness\F28_validation\e=0\4frames'
+if case == '4frames':
+    case_label = '4 frames section'
+elif case == '5frames':
+    case_label = '5 frames section'
+elif case == '6frames':
+    case_label = '6 frames section'
 
-ALLKE_filename = 'ALLKE_Global_Model.csv'
+rootdir = r'C:\Users\Marco\OneDrive\Documents\TU Delft\MSc\THESIS\Research Work\data_analysis\FV_crashworthiness\F28_validation\e=0'
+rootdir = os.path.join(rootdir, case)
+
+ALLKE_filename = 'ALLKE_Global.csv'
 ALLPD_frames_filename = 'ALLPD_Frames.csv'
 ALLPD_shear_clips_filename = 'ALLPD_Shear_clips.csv'
 ALLPD_skin_filename = 'ALLPD_Skin.csv'
 ALLPD_stiffeners_filename = 'ALLPD_Stiffeners.csv'
-ALLPD_struts_filename = 'ALLPD_Struts.csv'
+ALLPD_struts_filename = 'ALLPD_Floor_struts.csv'
 ALLPD_beams_filename = 'ALLPD_floor_beams.csv'
 ALLPD_longbeams_filename = 'ALLPD_floor_long_beams.csv'
 
@@ -46,7 +55,7 @@ ALLPD_struts_fraction = np.max(ALLPD_struts) / ALLKE_max
 ALLPD_beams_fraction  = np.max(ALLPD_beams) / ALLKE_max
 ALLPD_longbeams_fraction = np.max(ALLPD_longbeams) / ALLKE_max
 
-pielabel = 'Frames and Shear slips', 'Skin and Stiffeners', 'Cabin Floor', 'Struts', 'Cargo Floor'
+pielabel = 'Frames and Shear clips', 'Skin and Stiffeners', 'Cabin Floor', 'Struts', 'Cargo Floor'
 Xue_fraction = np.array([59.08, 13.59, 2.31, 7.96, 16.33])
 current_fraction = 100 * np.array([ALLPD_frames_fraction + ALLPD_shear_clips_fraction, ALLPD_skin_fraction + ALLPD_stiffeners_fraction, ALLPD_longbeams_fraction + ALLPD_beams_fraction, ALLPD_struts_fraction, 0])
 
@@ -54,6 +63,7 @@ current_fraction = 100 * np.array([ALLPD_frames_fraction + ALLPD_shear_clips_fra
 fig, ax = plt.subplots()
 ax.set_xlabel(r'Time [ms]')
 ax.set_ylabel(r'$E$ [kJ]')
+ax.set_title(case_label)
 ax.minorticks_on()
 ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
@@ -75,7 +85,7 @@ ax1[0].set_title('Xue et al.')
 
 ax1[1].pie(current_fraction, labels = pielabel, explode = explode, autopct='%1.1f%%')
 ax1[1].axis('equal')
-ax1[1].set_title('Current work')
+ax1[1].set_title('Current work, ' + case_label)
 
 plt.show()
 
