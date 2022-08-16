@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import matplotlib
+matplotlib.use('TkAgg')
 sns.set()
 
 #import custom files
@@ -12,7 +14,7 @@ import abaqus_keyword_parser as parse
 
 
 
-rootdir = r'C:\Users\marco\OneDrive\Documents\TU Delft\MSc\THESIS\Research Work\data_analysis\FV_crashworthiness\F28_validation\e=0'
+rootdir = r'C:\Users\Marco\OneDrive\Documents\TU Delft\MSc\THESIS\Research Work\data_analysis\FV_crashworthiness\F28_validation\e=0\4frames'
 
 ALLKE_filename = 'ALLKE_Global_Model.csv'
 ALLPD_frames_filename = 'ALLPD_Frames.csv'
