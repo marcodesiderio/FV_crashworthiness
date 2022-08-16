@@ -4,7 +4,8 @@ import os
 import pandas as pd
 
 class energy_data:
-    __slots__ = ['KE', 'floor', 'skin', 'stiffeners', 'struts', 'frames', 'shear_clips', 'KE_max', 'beams', 'longbeams', 'time']
+    __slots__ = ['KE', 'floor', 'skin', 'stiffeners', 'struts', 'frames', 'shear_clips', 'KE_max', 'beams', 'longbeams', 'time',
+                 'floor_f', 'skin_f', 'stiffeners_f', 'struts_f', 'frames_f', 'shear_clips_f']
 
     def __init__(self, path):
         ALLKE_filename = 'ALLKE_Global.csv'
@@ -38,6 +39,13 @@ class energy_data:
         self.KE = np.array(ALLKE['Energy(J)']).astype(float)
         self.KE_max = self.KE[0]
         self.time = ALLKE['Time(s)']
+
+        self.frames_f = self.frames[-1] / self.KE_max
+        self.shear_clips_f = self.shear_clips[-1] / self.KE_max
+        self.skin_f = self.skin[-1] / self.KE_max
+        self.stiffeners_f = self.stiffeners[-1] / self.KE_max
+        self.struts_f = self.struts[-1] / self.KE_max
+        self.floor_f = self.floor[-1] / self.KE_max
 
 
 

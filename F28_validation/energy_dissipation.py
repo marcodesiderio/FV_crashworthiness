@@ -23,22 +23,12 @@ E4 = energy_data(path4)
 E5 = energy_data(path5)
 E6 = energy_data(path6)
 
+pielabel = 'Frames and shear clips', 'Skin and stiffeners', 'Cabin floor', 'Struts', 'Cargo floor'
+Xue_fraction = np.array([59.08, 13.59, 2.31, 7.96, 16.33])
+E4_f = 100 * np.array([E4.frames_f + E4.shear_clips_f, E4.skin_f + E4.stiffeners_f, E4.floor_f, E4.struts_f, 0])
+E5_f = 100 * np.array([E5.frames_f + E5.shear_clips_f, E5.skin_f + E5.stiffeners_f, E5.floor_f, E5.struts_f, 0])
+E6_f = 100 * np.array([E6.frames_f + E6.shear_clips_f, E6.skin_f + E6.stiffeners_f, E6.floor_f, E6.struts_f, 0])
 
-
-
-# ALLPD_frames_fraction = np.max(ALLPD_frames) / ALLKE_max
-# ALLPD_shear_clips_fraction = np.max(ALLPD_shear_clips) / ALLKE_max
-# ALLPD_skin_fraction = np.max(ALLPD_skin) / ALLKE_max
-# ALLPD_stiffeners_fraction = np.max(ALLPD_stiffeners) / ALLKE_max
-# ALLPD_struts_fraction = np.max(ALLPD_struts) / ALLKE_max
-# ALLPD_beams_fraction  = np.max(ALLPD_beams) / ALLKE_max
-# ALLPD_longbeams_fraction = np.max(ALLPD_longbeams) / ALLKE_max
-#
-# pielabel = 'Frames and Shear clips', 'Skin and Stiffeners', 'Cabin Floor', 'Struts', 'Cargo Floor'
-# Xue_fraction = np.array([59.08, 13.59, 2.31, 7.96, 16.33])
-# current_fraction = 100 * np.array([ALLPD_frames_fraction + ALLPD_shear_clips_fraction, ALLPD_skin_fraction + ALLPD_stiffeners_fraction, ALLPD_longbeams_fraction + ALLPD_beams_fraction, ALLPD_struts_fraction, 0])
-#
-#
 # fig, ax = plt.subplots()
 # ax.set_xlabel(r'Time [ms]')
 # ax.set_ylabel(r'$E$ [kJ]')
@@ -56,16 +46,21 @@ E6 = energy_data(path6)
 # ax.plot(time * 1e3, ALLPD_longbeams / 1e3, label = 'Floor Long. Beams Plastic Energy')
 # ax.legend()
 #
-# fig1, ax1 = plt.subplots(1,2)
-# explode = (0,0,0,0,0)
-# ax1[0].pie(Xue_fraction, labels = pielabel, explode = explode, autopct='%1.1f%%')
-# ax1[0].axis('equal')
-# ax1[0].set_title('Xue et al.')
-#
-# ax1[1].pie(current_fraction, labels = pielabel, explode = explode, autopct='%1.1f%%')
-# ax1[1].axis('equal')
-# ax1[1].set_title('Current work, ' + case_label)
-#
-# plt.show()
+fig1, ax1 = plt.subplots(2,2)
+explode = (0,0,0,0,0)
+ax1[0, 0].pie(Xue_fraction, labels = pielabel, explode = explode, autopct='%1.1f%%')
+ax1[0, 0].axis('equal')
+ax1[0, 0].set_title('Xue et al.')
 
+ax1[0, 1].pie(E4_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+ax1[0, 1].axis('equal')
+ax1[0, 1].set_title('Current work, 4 frames')
 
+ax1[1, 0].pie(E5_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+ax1[1, 0].axis('equal')
+ax1[1, 0].set_title('Current work, 5 frames')
+
+ax1[1, 1].pie(E6_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+ax1[1, 1].axis('equal')
+ax1[1, 1].set_title('Current work, 6 frames')
+fig1.show()
