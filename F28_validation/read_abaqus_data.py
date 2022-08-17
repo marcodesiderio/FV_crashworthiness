@@ -84,43 +84,6 @@ class data:
             data = np.array(df[keys[1]]).astype(float)
             data_filtered = signal.filtfilt(b, a, data)
         return data, data_filtered
-    def plot_raw_data(self, x_label = 'Time [ms]', legend = 'False'):
-        fig, ax = plt.subplots()
-        ax.minorticks_on()
-        ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
-        ax.set_xlabel(x_label)
-        ax.set_ylabel(y_labels[self.data_key])
-        scale = plots_scaling[self.data_key]
-        # ax.set_title(self.data_label)
-
-        data = self.data
-        if len(data.shape) == 1:
-            ax.plot(self.time * 1000, data * scale, label = self.data_label)
-        else:
-            for j in range(data.shape[1]):
-                ax.plot(self.time * 1000, data[:,j] * scale, label = self.data_label + str(j+1))
-            if legend:
-                ax.legend()
-        plt.show()
-
-    def plot_filtered_data(self, x_label='Time [ms]', legend = 'False'):
-        fig, ax = plt.subplots()
-        ax.minorticks_on()
-        ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
-        ax.set_xlabel(x_label)
-        ax.set_ylabel(y_labels[self.data_key])
-        ax.set_title(self.data_type + ', filtered (Butterworth ' + str(self.fc) + 'Hz)')
-        scale = plots_scaling[self.data_key]
-
-        data = self.data_filtered
-        if len(data.shape) == 1:
-            ax.plot(self.time * 1000, data * scale, label=self.data_label)
-        else:
-            for j in range(data.shape[1]):
-                ax.plot(self.time * 1000, data[:, j] * scale, label=self.data_label + ' ' + str(j + 1))
-            if legend:
-                ax.legend()
-        plt.show()
 
 
 

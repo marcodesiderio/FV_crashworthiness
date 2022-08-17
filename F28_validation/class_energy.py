@@ -5,9 +5,9 @@ import pandas as pd
 
 class energy_data:
     __slots__ = ['KE', 'floor', 'skin', 'stiffeners', 'struts', 'frames', 'shear_clips', 'KE_max', 'beams', 'longbeams', 'time',
-                 'floor_f', 'skin_f', 'stiffeners_f', 'struts_f', 'frames_f', 'shear_clips_f']
+                 'floor_f', 'skin_f', 'stiffeners_f', 'struts_f', 'frames_f', 'shear_clips_f', 'label']
 
-    def __init__(self, path):
+    def __init__(self, path, label):
         ALLKE_filename = 'ALLKE_Global.csv'
         ALLPD_frames_filename = 'ALLPD_Frames.csv'
         ALLPD_shear_clips_filename = 'ALLPD_Shear_clips.csv'
@@ -46,6 +46,8 @@ class energy_data:
         self.stiffeners_f = self.stiffeners[-1] / self.KE_max
         self.struts_f = self.struts[-1] / self.KE_max
         self.floor_f = self.floor[-1] / self.KE_max
+
+        self.label = label
 
 
 
