@@ -2,12 +2,20 @@ import energy_dissipation as e
 import acceleration as a
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
 savefig = True
+savepath = r'C:\Users\marco\OneDrive\Documents\TU Delft\MSc\THESIS\Research Work\data_analysis\FV_crashworthiness\F28_validation\e=0\figures'
+# savepath = r''
+
 
 if savefig:
     print('#========== SAVING ALL PLOTS ==========#')
-
+    print('Saving directory:')
+    if savepath =='':
+        print('The saving directory is the current working directory.')
+    else:
+        print(savepath)
 
 ## ====================================== ##
 ## ======= acceleration plotting ======== ##
@@ -51,19 +59,21 @@ ax1.legend()
 fig1.set_size_inches(8 * 1.125, 6 * 1.125)
 fig1.tight_layout()
 if savefig:
-    fig1.savefig('mean_accelerations.pdf', dpi = 900, format = 'pdf')
+    savestr = 'mean_accelerations.pdf'
+    savestr = os.path.join(savepath, savestr)
+    fig1.savefig(savestr, dpi = 900, format = 'pdf')
 
-a.ACC4.plot_time_history(savefig=savefig)
-a.ACC5.plot_time_history(savefig=savefig)
-a.ACC6.plot_time_history(savefig=savefig)
+a.ACC4.plot_time_history(savefig=savefig, savepath=savepath)
+a.ACC5.plot_time_history(savefig=savefig, savepath=savepath)
+a.ACC6.plot_time_history(savefig=savefig, savepath=savepath)
 
 ## ====================================== ##
 ## ========== energy plotting =========== ##
 
-e.plot_pie(e.Xue_fraction, e.E4_f, e.E5_f, e.E6_f, e.pielabel, savefig=savefig)
-e.plot_time(e.E4, savefig=savefig)
-e.plot_time(e.E5, savefig=savefig)
-e.plot_time(e.E6, savefig=savefig)
+e.plot_pie(e.Xue_fraction, e.E4_f, e.E5_f, e.E6_f, e.pielabel, savefig=savefig, savepath=savepath)
+e.plot_time(e.E4, savefig=savefig, savepath=savepath)
+e.plot_time(e.E5, savefig=savefig, savepath=savepath)
+e.plot_time(e.E6, savefig=savefig, savepath=savepath)
 
 
 plt.show()

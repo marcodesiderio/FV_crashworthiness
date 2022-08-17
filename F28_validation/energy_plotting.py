@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
+import os
 
-def plot_pie(Xue_fraction, E4_f, E5_f, E6_f, pielabel, savefig = False):
+def plot_pie(Xue_fraction, E4_f, E5_f, E6_f, pielabel, savefig = False, savepath = ''):
 
     fig, ax = plt.subplots(2,2)
     explode = (0,0,0,0,0)
@@ -19,19 +20,21 @@ def plot_pie(Xue_fraction, E4_f, E5_f, E6_f, pielabel, savefig = False):
     ax[1, 1].pie(E6_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
     ax[1, 1].axis('equal')
     ax[1, 1].set_title('Current work, 6 frames')
-    fig.set_size_inches(8 * 1.125, 6 * 1.125)
-    fig.tight_layout()
+    fig.set_size_inches(8 * 1.5, 6 * 1.25)
+    # fig.tight_layout()
+    fig.suptitle('Energy absorption fraction; distribution by component')
     if savefig:
-        savestr = 'e_by_component_fractions.pdf'
+        savestr = 'E_by_component_fractions.pdf'
+        savestr = os.path.join(savepath, savestr)
         fig.savefig(savestr, dpi=900, format='pdf')
 
 
-def plot_time(E, savefig = False):
+def plot_time(E, savefig = False, savepath = ''):
 
     fig, ax = plt.subplots()
     ax.set_xlabel(r'Time [ms]')
     ax.set_ylabel(r'$E$ [kJ]')
-    ax.set_title(E.label)
+    ax.set_title(E.label + ' fuselage section')
     ax.minorticks_on()
     ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 
@@ -48,5 +51,6 @@ def plot_time(E, savefig = False):
     fig.tight_layout()
 
     if savefig:
-        savestr = 'e_abs_by_component_' + E.label.replace(' ', '') + '.pdf'
+        savestr = 'E_abs_by_component_' + E.label.replace(' ', '') + '.pdf'
+        savestr = os.path.join(savepath, savestr)
         fig.savefig(savestr, dpi=900, format='pdf')
