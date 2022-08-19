@@ -1,8 +1,10 @@
 import numpy as np
+from scipy import interpolate
 from numpy.linalg import inv
 import matplotlib.pyplot as plt
 from functions import closest_idx
 import os
+import scipy.fftpack
 
 
 class acceleration:
@@ -84,6 +86,44 @@ class acceleration:
             temp = np.trapz(self.data[:idx_1, i], self.time[:idx_1]) / self.time[idx_1] / 9.81
             mean_accels = np.append(mean_accels, temp)
         return mean_accels
+    def FFT(self):
+        # plot acceleration response in frequency domain
+        t_step = 0.0001
+        t_stop = self.time[-1] + t_step
+        time_even = np.arange(0, t_stop, t_step)
+        N = time_even.shape[0]
+        yf = np.zeros((time_even.shape[0], 12))
+        for i in range(self.data.shape[1]):
+            signal = interpolate.interp1d(self.time, self.data[:, i])
+            signal = signal(time_even)
+            yf[:, i] = scipy.fftpack.fft(signal)
+        xf = np.linspace(0.0, 1.0 / (2.0 * t_step), N // 2)
+        return yf, xf, N, signal
+
+    def plot_FFT(self, savefig = False, savepath = ''):
+        yf4, xf4, N4, signal = self.FFT()
+        fig, ax = plt.subplots()
+        ax.minorticks_on()
+        ax.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
+        for i in range(yf4.shape[1]):
+            yf = yf4[:,i]
+            xf = xf4
+            ax.plot(xf, 2.0/N4 * np.abs(yf[:N4//2]), label = 'Acceler. ' + str(i+1))
+
+        ax.set_xlim(left = 0, right = 500)
+        ax.legend()
+        ax.set_xlabel(r'$f$ [Hz]')
+        ax.set_ylabel(r'FFT [m/s$^2$/Hz]')
+        ax.set_title('FFT, ' + self.label + ' fuselage section')
+        ax.legend()
+        fig.set_size_inches(8 * 1.125, 6 * 1.125)
+        fig.tight_layout()
+        if savefig:
+            savestr = 'FFT' + self.label.replace(' ', '') + '.pdf'
+            savestr = os.path.join(savepath, savestr)
+            fig.savefig(savestr, dpi=900, format='pdf')
+
+
 
 
 
