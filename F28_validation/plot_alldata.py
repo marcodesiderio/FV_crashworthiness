@@ -83,18 +83,19 @@ ax0.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0.2)
 ax0.set_ylim(bottom = 0, top = np.hstack([a.mean_accels_4, a.mean_accels_5, a.mean_accels_6]).max() * 1.1)
 ax0.set_xticks(a.frames)
 ax0.set_xticklabels(a.frames)
-fig0.set_size_inches(8 * 1.125, 6 * 1.125)
-fig0.tight_layout()
-if savefig:
-    savestr = 'Average_accelerations.pdf'
-    savestr = os.path.join(savepath, savestr)
-    fig0.savefig(savestr, dpi = 900, format = 'pdf')
 
 ax0.plot(a.frames, a.mean_accels_avg, marker = 'o', markersize = 6, label = 'Average value')
 ax0.scatter(a.frames[0] * np.ones_like(a.mean_accels_4), a.mean_accels_4, label = '4 Frames Section', s=16)
 ax0.scatter(a.frames[1] * np.ones_like(a.mean_accels_5), a.mean_accels_5, label = '5 Frames Section', s=16)
 ax0.scatter(a.frames[2] * np.ones_like(a.mean_accels_6), a.mean_accels_6, label = '6 Frames Section', s=16)
 ax0.legend()
+
+fig0.set_size_inches(8 * 1.125, 6 * 1.125)
+fig0.tight_layout()
+if savefig:
+    savestr = 'Average_accelerations.pdf'
+    savestr = os.path.join(savepath, savestr)
+    fig0.savefig(savestr, dpi = 900, format = 'pdf')
 
 
 fig1, ax1 = plt.subplots()
