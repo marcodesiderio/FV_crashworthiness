@@ -22,7 +22,7 @@ def plot_pie(Xue_fraction, E4_f, E5_f, E6_f, pielabel, savefig = False, savepath
     ax[1, 1].set_title('Current work, 6 frames')
     fig.set_size_inches(8 * 1.5, 6 * 1.25)
     # fig.tight_layout()
-    fig.suptitle('Energy absorption fraction; distribution by component')
+    fig.suptitle('Energy absorption fraction; distribution by component. Current work referees to F28 aircraft.')
     if savefig:
         savestr = 'E_by_component_fractions.pdf'
         savestr = os.path.join(savepath, savestr)

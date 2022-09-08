@@ -14,7 +14,7 @@ def exit(exit_val):
     running = exit_val
 
 
-savefig = False
+savefig = None
 running = True
 
 gui = Tk(className= 'Save plots as PDF?')
@@ -24,10 +24,13 @@ pixelVirtual = PhotoImage(width=1, height=1)
 Button(gui, text='Save all plots',command=lambda *args: set_value(True), bg='#9BFF75', fg='black', image=pixelVirtual, width=200, height=38, compound="c").pack()
 Button(gui, text='Do not save',command=lambda *args: set_value(False), bg='#FF8E75', fg='black', image=pixelVirtual, width=200, height=38, compound="c") .pack()
 Button(gui, text='Terminate program',command=lambda *args: exit(False), bg='#000000', fg='white', image=pixelVirtual, width=200, height=38, compound="c") .pack()
-Button(gui, text='Accept (default is no)',command=gui.destroy, image=pixelVirtual, width=200, height=38, compound="c").pack()
+Button(gui, text='Accept and continue',command=gui.destroy, image=pixelVirtual, width=200, height=38, compound="c").pack()
 
 mainloop()
 if not running:
+    sys.exit()
+if savefig == None:
+    print('No savefig selection. Exiting...')
     sys.exit()
 
 
