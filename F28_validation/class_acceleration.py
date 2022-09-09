@@ -110,7 +110,7 @@ class acceleration:
             xf = xf4
             ax.plot(xf, 2.0/N4 * np.abs(yf[:N4//2]), label = 'Acceler. ' + str(i+1))
 
-        ax.set_xlim(left = 0, right = 500)
+        ax.set_xlim(left = 0, right = 100)
         ax.legend()
         ax.set_xlabel(r'$f$ [Hz]')
         ax.set_ylabel(r'FFT [m/s$^2$/Hz]')

@@ -1,28 +1,37 @@
 import matplotlib.pyplot as plt
 import os
 
-def plot_pie(Xue_fraction, E4_f, E5_f, E6_f, pielabel, savefig = False, savepath = ''):
+def plot_pie(E00, E01, E02, E10, E11, E12, pielabel, savefig = False, savepath = ''):
 
-    fig, ax = plt.subplots(2,2)
-    explode = (0,0,0,0,0)
-    ax[0, 0].pie(Xue_fraction, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    fig, ax = plt.subplots(2,3)
+    explode = (0,0,0,0)
+    ax[0, 0].pie(E00, labels = pielabel, explode = explode, autopct='%1.1f%%')
     ax[0, 0].axis('equal')
-    ax[0, 0].set_title('Xue et al.')
+    ax[0, 0].set_title('e = 0.0')
 
-    ax[0, 1].pie(E4_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    ax[0, 1].pie(E01, labels = pielabel, explode = explode, autopct='%1.1f%%')
     ax[0, 1].axis('equal')
-    ax[0, 1].set_title('Current work, 4 frames')
+    ax[0, 1].set_title('e = 0.15')
 
-    ax[1, 0].pie(E5_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    ax[0, 2].pie(E02, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    ax[0, 2].axis('equal')
+    ax[0, 2].set_title('e = 0.30')
+
+    ax[1, 0].pie(E10, labels = pielabel, explode = explode, autopct='%1.1f%%')
     ax[1, 0].axis('equal')
-    ax[1, 0].set_title('Current work, 5 frames')
+    ax[1, 0].set_title('e = 0.45')
 
-    ax[1, 1].pie(E6_f, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    ax[1, 1].pie(E11, labels = pielabel, explode = explode, autopct='%1.1f%%')
     ax[1, 1].axis('equal')
-    ax[1, 1].set_title('Current work, 6 frames')
+    ax[1, 1].set_title('e = 0.60')
+
+    ax[1, 2].pie(E12, labels = pielabel, explode = explode, autopct='%1.1f%%')
+    ax[1, 2].axis('equal')
+    ax[1, 2].set_title('e = 0.70')
+
     fig.set_size_inches(8 * 1.5, 6 * 1.25)
     # fig.tight_layout()
-    fig.suptitle('Energy absorption fraction; distribution by component. Current work referees to F28 aircraft.')
+    fig.suptitle('Energy absorption fraction; distribution by component.')
     if savefig:
         savestr = 'E_by_component_fractions.pdf'
         savestr = os.path.join(savepath, savestr)

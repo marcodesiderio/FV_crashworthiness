@@ -1,3 +1,5 @@
+import pandas as pd
+
 import energy_dissipation as e
 import acceleration as a
 import matplotlib.pyplot as plt
@@ -5,6 +7,7 @@ import numpy as np
 import os
 import sys
 from tkinter import *
+import seaborn as sns
 
 def set_value(value):
     global savefig
@@ -59,9 +62,10 @@ ax_dri.grid(visible=True, which='minor', color='#999999', linestyle='-', alpha=0
 ax_dri.set_ylim(bottom = 0, top = np.hstack([a.DRI4, a.DRI5, a.DRI6]).max() * 1.1)
 ax_dri.set_xticks(a.frames)
 ax_dri.set_xticklabels(a.frames)
-
+data = [a.DRI4, a.DRI5, a.DRI6]
 ax_dri.plot(a.frames, a.DRI_mean, marker = 'o', markersize = 6, label='Average value')
-ax_dri.scatter(a.frames[0] * np.ones_like(a.DRI4), a.DRI4, label = '4 Frames Section', s=16)
+ax_dri.boxplot(data, positions = [4,5,6])
+ax_dri.scatter(a.frames[0] * np.ones_like(a.DRI4), a.DRI5, label = '4 Frames Section', s=16)
 ax_dri.scatter(a.frames[1] * np.ones_like(a.DRI5), a.DRI5, label = '5 Frames Section', s=16)
 ax_dri.scatter(a.frames[2] * np.ones_like(a.DRI6), a.DRI6, label = '6 Frames Section', s=16)
 
@@ -84,7 +88,9 @@ ax0.set_ylim(bottom = 0, top = np.hstack([a.mean_accels_4, a.mean_accels_5, a.me
 ax0.set_xticks(a.frames)
 ax0.set_xticklabels(a.frames)
 
+data = [a.mean_accels_4, a.mean_accels_5, a.mean_accels_6]
 ax0.plot(a.frames, a.mean_accels_avg, marker = 'o', markersize = 6, label = 'Average value')
+ax0.boxplot(data, positions = [4,5,6])
 ax0.scatter(a.frames[0] * np.ones_like(a.mean_accels_4), a.mean_accels_4, label = '4 Frames Section', s=16)
 ax0.scatter(a.frames[1] * np.ones_like(a.mean_accels_5), a.mean_accels_5, label = '5 Frames Section', s=16)
 ax0.scatter(a.frames[2] * np.ones_like(a.mean_accels_6), a.mean_accels_6, label = '6 Frames Section', s=16)

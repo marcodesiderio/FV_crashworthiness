@@ -40,12 +40,13 @@ class energy_data:
         self.KE_max = self.KE[0]
         self.time = ALLKE['Time(s)']
 
-        self.frames_f = self.frames[-1] / self.KE_max
-        self.shear_clips_f = self.shear_clips[-1] / self.KE_max
-        self.skin_f = self.skin[-1] / self.KE_max
-        self.stiffeners_f = self.stiffeners[-1] / self.KE_max
-        self.struts_f = self.struts[-1] / self.KE_max
-        self.floor_f = self.floor[-1] / self.KE_max
+        tot = self.frames[-1] + self.shear_clips[-1] + self.skin[-1] + self.stiffeners[-1] + self.struts[-1] + self.floor[-1]
+        self.frames_f = self.frames[-1] / tot
+        self.shear_clips_f = self.shear_clips[-1] / tot
+        self.skin_f = self.skin[-1] / tot
+        self.stiffeners_f = self.stiffeners[-1] / tot
+        self.struts_f = self.struts[-1] / tot
+        self.floor_f = self.floor[-1] / tot
 
         self.label = label
 
