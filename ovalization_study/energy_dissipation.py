@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib
 from class_energy import energy_data
-from energy_plotting import plot_pie, plot_time
+from energy_plotting import plot_pie, plot_time, plot_keg_time, plot_stiff_skin_time, plot_floor_time, plot_struts_time, plot_FrSc_time
 matplotlib.use('TkAgg')
 sns.set()
 
